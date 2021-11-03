@@ -16,6 +16,17 @@ class LocalController {
         render(template: "/local/lista", model:[locais:lista])
     }
 
+    def procurarPorNome(){
+
+        String nomeLocal = params.nome
+
+        def lista = Local.findAllByNomeIlike("%"+nomeLocal+"%")
+
+        println nomeLocal
+
+        render(template: "/local/lista", model:[locais:lista])
+    }
+
     def adicionar(){
 
         Local novoLocal = new Local()

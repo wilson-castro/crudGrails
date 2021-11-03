@@ -29,8 +29,6 @@ class LocalController {
     def excluir(){
         Local local = Local.get(params.id)
 
-        println local.capacidade
-
         local.delete(flush:true)
 
         def lista = Local.list()

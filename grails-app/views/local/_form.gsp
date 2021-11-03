@@ -1,5 +1,5 @@
 <div id="divMensagem"></div>
-<g:formRemote name="frmProduto" url="[controller:'local',action:'salvar']" update="divMensagem"
+<g:formRemote name="frmLocal" url="[controller:'local',action:'salvar']" update="divMensagem"
 onSuccess="carregarLista()">
     <label for="inputNome">Nome</label>
     <input id="inputNome" type="text" name="nome" value="${local.nome}"><br>

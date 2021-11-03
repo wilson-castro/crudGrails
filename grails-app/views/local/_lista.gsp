@@ -10,6 +10,7 @@
             </tr>
         </thead>
         <tbody>
+
         <g:each var="local" in="${locais}">
             <tr>
                 <td>${local.nome}</td>

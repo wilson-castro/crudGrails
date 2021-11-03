@@ -16,8 +16,9 @@
                 <td>${local.nomeShow}</td>
                 <td>${local.capacidade}</td>
                 <td>
-                    <a href="#">Alterar</a> &nbsp; &nbsp; &nbsp;
-                    <a href="#">Excluir</a>
+                    <g:remoteLink controller="local" action="alterar" update="divForm" id="${local.id}">Alterar</g:remoteLink>
+                    &nbsp; &nbsp; &nbsp;
+                    <a href="#" onclick="excluir(${local.id})" >Excluir</a>
                 </td>
             </tr>
         </g:each>

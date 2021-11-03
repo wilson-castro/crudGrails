@@ -9,6 +9,13 @@ class LocalController {
         render(view:"/local/index", model:[locais:lista])
     }
 
+    def listar(){
+
+        def lista = Local.list()
+
+        render(template: "/local/lista", model:[locais:lista])
+    }
+
     def adicionar(){
 
         Local novoLocal = new Local()
@@ -19,9 +26,32 @@ class LocalController {
         render(template:"/local/form", model:[local:novoLocal])
     }
 
-    def salvar(){
+    def excluir(){
+        Local local = Local.get(params.id)
 
-        Local local = new Local();
+        println local.capacidade
+
+        local.delete(flush:true)
+
+        def lista = Local.list()
+        render(template: "/local/lista", model:[locais: lista])
+    }
+
+    def alterar(){
+
+        Local local = Local.get(params.id)
+        render(template:"/local/form", model:[local: local])
+    }
+
+    def salvar(){
+        Local local = null
+
+        if(params.id){
+            local = Local.get(params.id)
+        }else {
+            local =  new Local();
+
+        }
 
         String nomeLocal = params.nome
         String nomeShow = params.nomeShow

@@ -5,6 +5,18 @@
     <meta name="layout" content="main">
     <title>Gerenciamento de locais</title>
     <g:javascript library="jquery" />
+
+    <script type="text/javascript">
+        function carregarLista(){
+            <g:remoteFunction controller="local" action="listar"  update="divLista" />
+        }
+        function excluir(id){
+            if(confirm("Deseja realmente excluir?")){
+                <g:remoteFunction controller="local" action="excluir" update="divLista" id="'+id+'" />
+            }
+        }
+
+    </script>
 </head>
 <body>
     <g:remoteLink controller="local" action="adicionar" update="divForm">Adicionar</g:remoteLink>

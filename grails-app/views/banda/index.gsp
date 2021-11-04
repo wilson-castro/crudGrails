@@ -52,7 +52,7 @@
     </div>
 
     <div id="divLista">
-        <g:render template="lista" model="[locais:locais]"></g:render>
+        <g:render template="lista" model="[bandas:bandas]"></g:render>
     </div>
 
     <br>

@@ -25,4 +25,13 @@ class ShowController {
         render(template:"/show/form", model:[show:novoShow,bandas:listaBandas, locais:listaLocais])
 
     }
+
+    def salvar(){
+
+        Date dataShow = new Date(params.dataShow)
+        Local localDoShow = Local.get(params.id)
+
+        println localDoShow.nome
+        println dataShow
+    }
 }

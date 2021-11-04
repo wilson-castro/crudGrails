@@ -3,9 +3,12 @@
               onSuccess="carregarLista()">
 
     <label for="dataInput">data do show:</label>
-    <input type="date" id="dataInput" name="dataShow" 
-           defaultValue="${show?.dataDoShow.format("yyyy-MM-dd")}">
-
+    <input type="date" id="dataInput" name="dataShow"
+           min="${show?.dataDoShow.format("yyyy-MM-dd")}"
+           <g:if test="${show?.id == null}">
+           value="${show?.dataDoShow.format("yyyy-MM-dd")}">
+           </g:if>
+    <br>
     <select style="margin-top: 10px;" id="selectLocais" required name="locais">
         <option value="-selecione-">Selecione o Local</option>
         <g:each var="local" in="${locais}">
@@ -17,7 +20,9 @@
         </g:each>
     </select>
 
-    <h5>Bandas</h5>
+   <g:if test="${bandas.size()>0}">
+       <h5>Bandas</h5>
+   </g:if>
     <div class="group-checkbox" style="margin-bottom: 10px;">
         <g:each var="banda" in="${bandas}">
             <input type="checkbox"

@@ -5,7 +5,7 @@ class Local {
     String nome
     Integer capacidade
 
-    static hasMany = [showsNoLocal:Local]
+    static hasMany = [showsNoLocal:Show]
 
     static constraints = {
         nome nullable: false, blank: false

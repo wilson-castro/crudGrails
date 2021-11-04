@@ -1,27 +1,30 @@
-
-<table>
-    <caption>Bandas</caption>
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Genero</th>
-            <th>Shows</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        <g:each var="banda" in="${bandas}">
+<g:if test="${bandas.size() > 0}">
+    <table>
+        <caption>Lista de Bandas</caption>
+        <thead>
             <tr>
-                    <td>${banda.nome}</td>
-                    <td>${banda.genero}</td>
-                    <td>${banda.shows}</td>
-                    <td>
-                        <a href="#" >Alterar</a>
-                        <a href="#">Excluir</a>
-                    </td>
-                </tr>
-        </g:each>
+                <th>Nome</th>
+                <th>Genero</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
 
-    </tbody>
-</table>
+            <g:each var="banda" in="${bandas}">
+                <tr>
+                        <td>${banda.nome}</td>
+                        <td>${banda.genero.descricao}</td>
+                        <td>
+                            <g:remoteLink controller="banda" action="alterar" update="divForm" id="${banda.id}">Alterar</g:remoteLink>
+                            <a href="#" onclick="excluir(${banda.id})" >Excluir</a>
+                        </td>
+                    </tr>
+            </g:each>
+
+        </tbody>
+    </table>
+</g:if>
+<g:else>
+    <br>
+    <h5>Não há bandas</h5>
+</g:else>

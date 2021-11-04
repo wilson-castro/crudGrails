@@ -22,19 +22,17 @@ class LocalController {
 
         def lista = Local.findAllByNomeIlike("%"+nomeLocal+"%")
 
-        println nomeLocal
-
         render(template: "/local/lista", model:[locais:lista])
     }
 
-    def adicionar(){
+    def prepararForm(){
 
         Local novoLocal = new Local()
         novoLocal.nome = ""
-        novoLocal.nomeShow = ""
         novoLocal.capacidade = 1
 
         render(template:"/local/form", model:[local:novoLocal])
+
     }
 
     def excluir(){
@@ -63,11 +61,9 @@ class LocalController {
         }
 
         String nomeLocal = params.nome
-        String nomeShow = params.nomeShow
         Integer capacidadeDoShow = params.capacidade.toInteger()
 
         local.nome = nomeLocal
-        local.nomeShow = nomeShow
         local.capacidade = capacidadeDoShow
 
         local.validate()

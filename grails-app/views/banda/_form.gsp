@@ -2,13 +2,16 @@
 <g:formRemote name="frmBanda" url="[controller:'banda',action:'salvar']" update="divMensagem"
               onSuccess="carregarLista()">
     <label for="inputNome">Nome</label>
-    <input id="inputNome" type="text" name="nome" value="${banda.nome}"><br>
+    <input id="inputNome" required type="text" name="nome" value="${banda.nome}"><br>
 
-    <label for="inputNomeShow">Nome Show</label>
-    <input id="inputNomeShow" type="text" name="nomeShow" value="${banda.genero}"><br>
-
-    <label for="inputCapacidade">Capacidade</label>
-    <input id="inputCapacidade" type="number" min="1" name="capacidade" value="${banda.shows}"><br>
+    <div style="margin: 10px; margin-left: 50px">
+        <select id="selectGeneros" required name="genero">
+            <option value="-selecione-">Selecione o genero</option>
+            <option value="ROCK" >ROCK</option>
+            <option value="FORRO">FORRÓ</option>
+            <option value=AXE>AXÉ</option>
+        </select>
+    </div>
 
     <input type="hidden" name="id" value="${banda.id}"/>
 

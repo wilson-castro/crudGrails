@@ -4,7 +4,6 @@
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>Show</th>
                 <th>Capacidade</th>
                 <th>Ações</th>
             </tr>
@@ -14,7 +13,6 @@
         <g:each var="local" in="${locais}">
             <tr>
                 <td>${local.nome}</td>
-                <td>${local.nomeShow}</td>
                 <td>${local.capacidade}</td>
                 <td>
                     <g:remoteLink controller="local" action="alterar" update="divForm" id="${local.id}">Alterar</g:remoteLink>

@@ -6,15 +6,20 @@
     <title>Gerenciamento de locais</title>
     <g:javascript library="jquery" />
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <script type="text/javascript">
         function carregarLista(){
             <g:remoteFunction controller="local" action="listar"  update="divLista" />
         }
 
         function carregarListaFiltrada(){
-            let nome = document.getElementById("nomeBusca").value
+            const nome = document.getElementById("inputBuscarPorNome").value
+            const parameters = { "nome":nome}
 
-            <g:remoteFunction controller="local" action="procurarPorNome"  update="divLista" nome="'+nome+'" />
+            <g:remoteFunction controller="local" action="procurarPorNome" update="divLista"
+                params="parameters"/>
+
         }
 
         function excluir(id){
@@ -26,13 +31,13 @@
     </script>
 </head>
 <body>
-    <g:remoteLink controller="local" action="adicionar" update="divForm">Adicionar</g:remoteLink>
+    <g:remoteLink controller="local" action="prepararForm" update="divForm">Adicionar</g:remoteLink>
 
-    <div>
-           <input id="nomeBusca" type="text" placeholder="Digite o nome para buscar..."><br>
+    <div id="divBuscar">
+        <input id="inputBuscarPorNome" type="text" placeholder="Digite o nome para buscar..."><br>
 
-            <input type="button" name="btnPesquisar" value="Procurar" onclick="carregarListaFiltrada()" />
-            <br>
+        <button name="btnPesquisar" onclick="carregarListaFiltrada()">Procurar</button>
+        <br>
     </div>
 
     <div id="divLista">

@@ -51,40 +51,23 @@ class ShowController {
         Local localDoShow = Local.get(params.localID)
         List listBandas = params.List_BandaIDs.toList()
 
-        def listaDeBandas = new ArrayList<Banda>();
+        ShowService showService = new ShowService()
 
-        listBandas.eachWithIndex { id,i->
-            if (id?.toInteger() > 0) {
-                Integer idBandaInt = listBandas[i].toInteger()
-                Long idBanda = (Long) idBandaInt
+        showService.save(show,  dataShow, localDoShow, listBandas)
 
-                Banda bandaDoShow = Banda.get(idBanda)
-
-                listaDeBandas.add(bandaDoShow)
-            }
-        }
-
-        show.dataDoShow = dataShow
-        show.localDoShow = localDoShow
-        show.bandasNoShow = listaDeBandas.toSet()
-
-        show.validate()
-        if (!show.hasErrors()){
-
-            show.save(flush:true)
-            render("Salvo")
-        }else{
+        if (showService.hasErrors){
             render("Ops... deu pau!")
-            show.errors.allErrors.each {
-                println it
-            }
+        }else{
+            render("Salvo")
         }
     }
 
     def excluir(){
         Show show = Show.get(params.id)
 
-        show.delete(flush:true)
+        ShowService showService = new ShowService()
+
+        showService.delete(show)
 
         def lista = Show.list()
         render(template: "/show/lista", model:[shows: lista])

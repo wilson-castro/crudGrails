@@ -17,10 +17,11 @@ class LocalController {
     }
 
     def procurarPorNome(){
+        LocalService localService = new LocalService()
 
         String nomeLocal = params.nome
 
-        def lista = Local.findAllByNomeIlike("%"+nomeLocal+"%")
+        def lista = localService.findByName(nomeLocal)
 
         render(template: "/local/lista", model:[locais:lista])
     }
@@ -38,7 +39,8 @@ class LocalController {
     def excluir(){
         Local local = Local.get(params.id)
 
-        local.delete(flush:true)
+        LocalService localService = new LocalService()
+        localService.delete(local)
 
         def lista = Local.list()
         render(template: "/local/lista", model:[locais: lista])
@@ -66,17 +68,15 @@ class LocalController {
         local.nome = nomeLocal
         local.capacidade = capacidadeDoShow
 
-        local.validate()
-        if (!local.hasErrors()){
+        LocalService localService = new LocalService()
+        localService.save(local)
 
-            local.save(flush:true)
-            render("Salvo")
-        }else{
+        if (localService.hasErrors){
             render("Ops... deu pau!")
-            local.errors.allErrors.each {
-                println it
-            }
+        }else{
+            render("Salvo")
         }
+
     }
 
 }

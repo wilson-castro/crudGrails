@@ -10,30 +10,13 @@ class BandaController {
     }
 
     def procurarPorNomeEGenero(){
+        BandaService bandaService = new BandaService()
 
         String nomeBanda = params.nome
+
         def generos = params['listaGeneros[]']
 
-        def generosConvertidosParaEnum = null
-
-        if(generos != null){
-           try {
-               for (String genero : generos) {
-                   generosConvertidosParaEnum = Banda.Genero.valueOf(genero)
-               }
-           }catch(Exception e){
-               generosConvertidosParaEnum = Banda.Genero.valueOf(generos)
-
-           }
-       }
-
-        def lista = Banda.createCriteria().list {
-            ilike("nome", "%"+nomeBanda+"%")
-            and{
-                'in'("genero",generosConvertidosParaEnum)
-            }
-            order("id","asc")
-        }
+       def lista = bandaService.findByNameAndGenero(nomeBanda, generos)
 
         render(template: "/banda/lista", model:[bandas:lista])
     }
@@ -55,6 +38,7 @@ class BandaController {
     }
 
     def salvar(){
+        BandaService bandaService = new BandaService()
         Banda banda = null
 
         if (params.id){
@@ -66,24 +50,23 @@ class BandaController {
         banda.nome = params.nome
         banda.genero = Banda.Genero.valueOf(params.genero)
 
-        banda.validate()
-        if (!banda.hasErrors()){
+        bandaService.save(banda)
 
-            banda.save(flush:true)
-            render("Salvo")
-        }else{
+        if(bandaService.hasErrors){
             render("Ops... deu pau!")
-            banda.errors.allErrors.each {
-                println it
-            }
+        }else{
+           render("Salvo")
         }
 
     }
 
     def excluir(){
         Banda banda = Banda.get(params.id)
+        BandaService bandaService = new BandaService()
 
-        banda.delete(flush:true)
+        def listaDeShow = Show.list()
+
+        bandaService.delete(listaDeShow,banda)
 
         def lista = Banda.list()
         render(template: "/banda/lista", model:[bandas: lista])

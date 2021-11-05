@@ -2,14 +2,14 @@
 <g:formRemote name="frmShow" url="[controller:'show',action:'salvar']" update="divMensagem"
               onSuccess="carregarLista()">
 
-    <label for="dataInput">data do show:</label>
-    <input type="date" id="dataInput" name="dataShow"
+    <label  for="dataInput">data do show:</label>
+    <input required type="date" id="dataInput" name="dataShow"
            min="${show?.dataDoShow.format("yyyy-MM-dd")}"
            <g:if test="${show?.id == null}">
            value="${show?.dataDoShow.format("yyyy-MM-dd")}">
            </g:if>
     <br>
-    <select style="margin-top: 10px;" id="selectLocais" required name="locais">
+    <select style="margin-top: 10px;" id="selectLocais" required name="localID">
         <option value="-selecione-">Selecione o Local</option>
         <g:each var="local" in="${locais}">
             <option value="<%=local.id %>" >

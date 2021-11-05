@@ -28,10 +28,24 @@ class ShowController {
 
     def salvar(){
 
-        Date dataShow = new Date(params.dataShow)
-        Local localDoShow = Local.get(params.id)
+        Show show = new Show()
 
-        println localDoShow.nome
-        println dataShow
+        Date dataShow = Date.parse("yyyy-MM-dd",params.dataShow)
+        Local localDoShow = Local.get(params.localID)
+        List listaBandas = params.List_BandaIDs.toList()
+
+        listaBandas.eachWithIndex { id,i->
+            if (id?.toInteger() > 0) {
+                Integer idBandaInt = listaBandas[i].toInteger()
+                Long idBanda = (Long) idBandaInt
+
+                Banda bandaDoShow = Banda.get(idBanda)
+
+                def listabanda = null
+                listabanda.add(bandaDoShow)
+            }
+        }
+
+        println show.bandasNoShow
     }
 }

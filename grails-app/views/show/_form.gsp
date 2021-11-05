@@ -4,10 +4,14 @@
 
     <label  for="dataInput">data do show:</label>
     <input required type="date" id="dataInput" name="dataShow"
-           min="${show?.dataDoShow.format("yyyy-MM-dd")}"
-           <g:if test="${show?.id == null}">
-           value="${show?.dataDoShow.format("yyyy-MM-dd")}">
-           </g:if>
+        <g:if test="${show?.id == null}">
+            min="${show?.dataDoShow.format("yyyy-MM-dd")}"
+            value="${show?.dataDoShow.format("yyyy-MM-dd")}">
+        </g:if>
+        <g:else>
+            value="${show?.dataDoShow.format("yyyy-MM-dd")}"
+            min="${new Date().format("yyyy-MM-dd")}">
+        </g:else>
     <br>
     <select style="margin-top: 10px;" id="selectLocais" required name="localID">
         <option value="-selecione-">Selecione o Local</option>

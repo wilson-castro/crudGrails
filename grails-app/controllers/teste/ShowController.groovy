@@ -26,26 +26,67 @@ class ShowController {
 
     }
 
+    def alterar(){
+
+        Show show = Show.get(params.id)
+
+        def listaBandas = Banda.list()
+        def listaLocais = Local.list()
+
+        render(template:"/show/form", model:[show:show,bandas:listaBandas, locais:listaLocais])
+    }
+
+
     def salvar(){
 
-        Show show = new Show()
+        Show show = null
+
+        if(params.id){
+            show = Show.get(params.id)
+        }else{
+            show = new Show()
+        }
 
         Date dataShow = Date.parse("yyyy-MM-dd",params.dataShow)
         Local localDoShow = Local.get(params.localID)
-        List listaBandas = params.List_BandaIDs.toList()
+        List listBandas = params.List_BandaIDs.toList()
 
-        listaBandas.eachWithIndex { id,i->
+        def listaDeBandas = new ArrayList<Banda>();
+
+        listBandas.eachWithIndex { id,i->
             if (id?.toInteger() > 0) {
-                Integer idBandaInt = listaBandas[i].toInteger()
+                Integer idBandaInt = listBandas[i].toInteger()
                 Long idBanda = (Long) idBandaInt
 
                 Banda bandaDoShow = Banda.get(idBanda)
 
-                def listabanda = null
-                listabanda.add(bandaDoShow)
+                listaDeBandas.add(bandaDoShow)
             }
         }
 
-        println show.bandasNoShow
+        show.dataDoShow = dataShow
+        show.localDoShow = localDoShow
+        show.bandasNoShow = listaDeBandas.toSet()
+
+        show.validate()
+        if (!show.hasErrors()){
+
+            show.save(flush:true)
+            render("Salvo")
+        }else{
+            render("Ops... deu pau!")
+            show.errors.allErrors.each {
+                println it
+            }
+        }
+    }
+
+    def excluir(){
+        Show show = Show.get(params.id)
+
+        show.delete(flush:true)
+
+        def lista = Show.list()
+        render(template: "/show/lista", model:[shows: lista])
     }
 }

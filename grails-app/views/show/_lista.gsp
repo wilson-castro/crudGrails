@@ -14,7 +14,7 @@
         <g:each var="show" in="${shows}">
             <tr>
                 <td>${show.localDoShow?.nome}</td>
-                <td>${show.data}</td>
+                <td>${show.dataDoShow.format("dd/MM/yyyyy")}</td>
                 <td>${show.bandasNoShow?.size()}</td>
                 <td>
                     <g:remoteLink controller="show" action="alterar" update="divForm" id="${show.id}">Alterar</g:remoteLink>

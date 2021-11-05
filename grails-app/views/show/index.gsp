@@ -9,24 +9,12 @@
     <script>
 
     function carregarLista(){
-            <g:remoteFunction controller="banda" action="listar"  update="divLista" />
-        }
-
-        function carregarListaFiltrada(){
-            const nome = document.getElementById("inputBuscarPorNome").value
-            let listaGenerosMarcados = [...$('input[name="listGeneros[]"]:checked').map(function(){
-                return this.value;
-            }).get()]
-
-            const parameters = { "nome":nome, "listaGeneros":listaGenerosMarcados}
-
-            <g:remoteFunction controller="banda" action="procurarPorNomeEGenero"  update="divLista"
-                params="parameters"/>
+            <g:remoteFunction controller="show" action="listar"  update="divLista" />
         }
 
         function excluir(id){
             if(confirm("Deseja realmente excluir?")){
-                <g:remoteFunction controller="banda" action="excluir" update="divLista" id="'+id+'" />
+                <g:remoteFunction controller="show" action="excluir" update="divLista" id="'+id+'" />
             }
         }
 

@@ -9,7 +9,7 @@ class Show {
     static hasMany = [bandasNoShow:Banda]
 
     static constraints = {
-        locaDoShow nullable:false
+        localDoShow nullable:false
     }
 
     static mapping = {
